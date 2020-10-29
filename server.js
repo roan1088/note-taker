@@ -14,12 +14,9 @@ app.use(express.json());
 // For static files, look in the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 // HTML Routes
-app.get("/notes", function(req, res) {
-    res.sendFile(path.join(__dirname, "./public/notes.html"));
-});
-app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "./public/index.html"));
-});
+require("./routes/htmlRoutes")(app);
+// API Routes
+require("./routes/apiRoutes")(app);
 
 // Starting the server
 app.listen(PORT, function() {
