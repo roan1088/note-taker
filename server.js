@@ -13,10 +13,11 @@ app.use(express.json());
 // Routes
 // For static files, look in the public folder
 app.use(express.static(path.join(__dirname, 'public')));
-// HTML Routes
-require("./routes/htmlRoutes")(app);
 // API Routes
 require("./routes/apiRoutes")(app);
+// HTML Routes
+require("./routes/htmlRoutes")(app);
+
 
 // Starting the server
 app.listen(PORT, function() {
