@@ -1,5 +1,8 @@
 // Importing the data from db.json
-var db = require("../db/db.json");
+const db = require("../db/db.json");
+// Importing the file system module
+const fs = require("fs");
+const path = require("path");
 
 // Exporting a function that creates api routes
 module.exports = function(app) {
@@ -22,7 +25,11 @@ module.exports = function(app) {
         newNote.id = id;
         // Push the new note to the db
         db.push(newNote);
-        // Return the new note
-        res.json(newNote);
+        // Write new db to the db file
+        fs.writeFile(path.resolve(__dirname, "../db/db.json"), JSON.stringify(db), function(err) {
+            if (err) throw err;
+            // Return the new note
+            res.json(newNote);
+        });
     });
 };
