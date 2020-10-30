@@ -32,4 +32,21 @@ module.exports = function(app) {
             res.json(newNote);
         });
     });
+    // DELETE request
+    app.delete("/api/notes/:id", function(req, res) {
+        // console.log(req.params.id);
+        // Find the index of the note with the id
+        const idList = db.map(function(note) {
+            return note.id;
+        });
+        const idIndex = idList.indexOf(parseInt(req.params.id));
+        // Remove the note at that index
+        db.splice(idIndex, 1);
+        // Write new db to the db file
+        fs.writeFile(path.resolve(__dirname, "../db/db.json"), JSON.stringify(db), function(err) {
+            if (err) throw err;
+            // Return OK status
+            res.json({ ok: true });
+        });
+    });
 };
